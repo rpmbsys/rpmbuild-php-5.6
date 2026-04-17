@@ -711,21 +711,6 @@ https://www.oracle.com/database/technologies/instant-client/downloads.html
 Documentation is at http://php.net/oci8 and http://php.net/pdo_oci
 %endif
 
-%package snmp
-Summary: A module for PHP applications that query SNMP-managed devices
-Group: Development/Languages
-# All files licensed under PHP version 3.01
-License: PHP
-Requires: php-common%{?_isa} = %{version}-%{release}, net-snmp
-BuildRequires: net-snmp-devel
-Obsoletes: php53-snmp, php53u-snmp, php54-snmp, php54w-snmp, php55u-snmp, php55w-snmp, php56u-snmp, php56w-snmp
-
-%description snmp
-The php-snmp package contains a dynamic shared object that will add
-support for querying SNMP devices to PHP.  PHP is an HTML-embeddable
-scripting language. If you need SNMP support for PHP applications, you
-will need to install this package and the php package.
-
 %package xml
 Summary: A module for PHP applications which use XML
 Group: Development/Languages
@@ -1322,7 +1307,6 @@ build --libdir=%{_libdir}/php \
       --enable-simplexml=shared \
       --enable-xml=shared \
       --enable-wddx=shared \
-      --with-snmp=shared,%{_prefix} \
       --enable-soap=shared \
       --with-xsl=shared,%{_prefix} \
       --enable-xmlreader=shared --enable-xmlwriter=shared \
@@ -1464,7 +1448,6 @@ build --includedir=%{_includedir}/php-zts \
       --enable-simplexml=shared \
       --enable-xml=shared \
       --enable-wddx=shared \
-      --with-snmp=shared,%{_prefix} \
       --enable-soap=shared \
       --with-xsl=shared,%{_prefix} \
       --enable-xmlreader=shared --enable-xmlwriter=shared \
@@ -1696,7 +1679,7 @@ install -D -m 644 %{SOURCE14} _fpmdoc/nginx-php.conf
 %endif
 
 # Generate files lists and stub .ini files for each subpackage
-for mod in pgsql odbc ldap snmp xmlrpc imap \
+for mod in pgsql odbc ldap xmlrpc imap \
     mysqlnd mysql mysqli pdo_mysql \
     mbstring gd dom xsl soap bcmath dba xmlreader xmlwriter \
     simplexml bz2 calendar ctype exif ftp gettext gmp iconv \
@@ -2050,7 +2033,6 @@ EOF
 %files odbc -f files.odbc
 %files imap -f files.imap
 %files ldap -f files.ldap
-%files snmp -f files.snmp
 %files xml -f files.xml
 %files xmlrpc -f files.xmlrpc
 %files mbstring -f files.mbstring
@@ -2088,6 +2070,9 @@ EOF
 
 
 %changelog
+* Fri Apr 17 2026 Alexander Ursu <alexander.ursu@gmail.com> - 5.6.40-42
+- no snmp
+
 * Tue Jun  4 2024 Remi Collet <remi@remirepo.net> - 5.6.40-41
 - Fix filter bypass in filter_var FILTER_VALIDATE_URL
   CVE-2024-5458
