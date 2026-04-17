@@ -1,3 +1,6 @@
+# License: MIT
+# http://opensource.org/licenses/MIT
+
 Add support for use of the system timezone database, rather
 than embedding a copy.  Discussed upstream but was not desired.
 
@@ -384,7 +387,7 @@ diff -up php-5.6.13/ext/date/lib/parse_tz.c.systzdata php-5.6.13/ext/date/lib/pa
 +        size_t n;
 +        char *data, *p;
 +        
-+        data = malloc(3 * sysdb->index_size + 7);
++        data = malloc(3 * sysdb->index_size + sizeof(FAKE_HEADER) - 1);
 +
 +        p = mempcpy(data, FAKE_HEADER, sizeof(FAKE_HEADER) - 1);
 +

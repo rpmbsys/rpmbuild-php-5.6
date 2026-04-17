@@ -8,6 +8,7 @@ After=syslog.target network.target
 
 [Service]
 Type=notify
+EnvironmentFile=/etc/sysconfig/php-fpm
 ExecStart=/usr/sbin/php-fpm --nodaemonize
 ExecReload=/bin/kill -USR2 $MAINPID
 PrivateTmp=true
