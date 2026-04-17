@@ -1,5 +1,5 @@
 ARG os=8.10.20240528
-FROM aursu/php81build:${os}-base
+FROM aursu/php56build:${os}-base
 
 COPY SOURCES ${BUILD_TOPDIR}/SOURCES
 COPY SPECS ${BUILD_TOPDIR}/SPECS
