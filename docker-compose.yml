@@ -14,7 +14,6 @@ services:
       args:
         os: $RL8
 
-
 volumes:
   rpm9rocky:
     name: rpm9rocky

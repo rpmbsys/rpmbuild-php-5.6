@@ -25,11 +25,9 @@ RUN dnf -y install \
         libxml2-devel \
         libxslt-devel \
         libzip-devel \
-        mysql8.4-devel \
         nginx-filesystem \
         oniguruma-devel \
         openldap-devel \
-        openssl-devel \
         pcre2-devel \
         perl \
         postgresql-devel \
@@ -42,5 +40,6 @@ RUN dnf -y install \
     && dnf clean all && rm -rf /var/cache/dnf /var/lib/rpm/__db*
 
 RUN dnf -y --enablerepo=bintray-custom install \
-        uw-imap-devel \
+        compat-openssl10-devel \
+        mysql-devel \
     && dnf clean all && rm -rf /var/cache/dnf /var/lib/rpm/__db*
