@@ -3,51 +3,52 @@ FROM aursu/rpmbuild:${os}-build
 
 USER root
 RUN dnf -y install \
+        libXpm-devel \
+        libvpx-devel \
         aspell-devel \
         enchant-devel \
         firebird-devel \
         freetds-devel \
-        gd-devel \
         gmp-devel \
         libc-client-devel \
         libmcrypt-devel \
         # bzip2-devel \
-        # cyrus-sasl-devel \
-        # freetype-devel \
-        # gdbm-devel \
-        # httpd-devel \
-        # krb5-devel \
-        # libacl-devel \
-        # libcurl-devel \
-        # libedit-devel \
-        # libdb-devel \
+        cyrus-sasl-devel \
+        freetype-devel \
+        gdbm-devel \
+        httpd-devel \
+        krb5-devel \
+        libacl-devel \
+        libcurl-devel \
+        libedit-devel \
+        libdb-devel \
         # libffi-devel \
-        # libicu-devel \
-        # libjpeg-turbo-devel \
-        # libpng-devel \
+        libicu-devel \
+        libjpeg-turbo-devel \
+        libpng-devel \
         # libsodium-devel \
-        # libtidy-devel \
-        # libtool-ltdl-devel \
+        libtidy-devel \
+        libtool-ltdl-devel \
         # libwebp-devel \
         # libxcrypt-devel \
-        # libxml2-devel \
-        # libxslt-devel \
+        libxml2-devel \
+        libxslt-devel \
         # libzip-devel \
         # nginx-filesystem \
         # oniguruma-devel \
-        # openldap-devel \
+        openldap-devel \
         pam-devel \
         pcre-devel \
-        # perl \
-        # postgresql-devel \
-        # postfix \
+        perl \
+        postgresql-devel \
+        postfix \
         recode-devel \
         t1lib-devel \
         tokyocabinet-devel \
-        # sqlite-devel \
-        # systemd-devel \
-        # systemtap-sdt-devel \
-        # unixODBC-devel \
+        sqlite-devel \
+        systemd-devel \
+        systemtap-sdt-devel \
+        unixODBC-devel \
         # zlib-devel \
     && dnf clean all && rm -rf /var/cache/dnf /var/lib/rpm/__db*
 

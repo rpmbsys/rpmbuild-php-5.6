@@ -102,7 +102,7 @@
 %endif
 
 %global with_dtrace  1
-%global with_libgd   1
+%global with_libgd   0
 %global with_libzip  0
 %global with_zip     0
 %global db_devel  libdb-devel
