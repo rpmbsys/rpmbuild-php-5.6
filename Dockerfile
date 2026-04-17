@@ -1,4 +1,5 @@
-FROM aursu/php5build:7-base
+ARG os=8.10.20240528
+FROM aursu/php81build:${os}-base
 
 COPY SOURCES ${BUILD_TOPDIR}/SOURCES
 COPY SPECS ${BUILD_TOPDIR}/SPECS

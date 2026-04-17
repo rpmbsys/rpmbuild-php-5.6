@@ -1,21 +1,22 @@
-version: "3.5"
 services:
-  centos7php5:
+  rocky9php56:
     volumes:
-      - rpms:/home/centos/rpmbuild/SRPMS
-      - rpm7:/home/centos/rpmbuild/RPMS
+      - rpm9rocky:/home/centos/rpmbuild/RPMS
     build:
       context: .
-  centos7php5rel:
-    command: ["-ba", "--with", "relocation"]
+      args:
+        os: $RL9
+  rocky8php56:
     volumes:
-      - rpms:/home/centos/rpmbuild/SRPMS
-      - rpm7:/home/centos/rpmbuild/RPMS
+      - rpm8rocky:/home/centos/rpmbuild/RPMS
     build:
       context: .
+      args:
+        os: $RL8
+
 
 volumes:
-  rpms:
-    name: rpms
-  rpm7:
-    name: rpm7
+  rpm9rocky:
+    name: rpm9rocky
+  rpm8rocky:
+    name: rpm8rocky

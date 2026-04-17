@@ -1,22 +1,13 @@
-version: "3.5"
 services:
-  centos7php5build:
-    networks:
-      - buildnet
+  rocky9build:
     build:
       context: .
-      network: buildnet
-    image: aursu/php5build:7-build
-  centos7php5buildrel:
-    networks:
-      - buildnet
+      args:
+        rocky: $RL9
+    image: "aursu/php56build:${RL9TAG}-build"
+  rocky8build:
     build:
       context: .
-      dockerfile: Dockerfile.rel
-      network: buildnet
-    image: aursu/php5build:7-build-rel
-
-networks:
-  buildnet:
-    external: true
-    name: buildnet
+      args:
+        rocky: $RL8
+    image: "aursu/php56build:${RL8TAG}-build"

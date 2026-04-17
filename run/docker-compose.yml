@@ -1,12 +1,14 @@
-version: "3.5"
 services:
-  centos7php5run:
-    build:
-      context: .
-    image: aursu/php5build:7-runtime
-  centos7php5devbase:
+  rocky8run:
     build:
       context: .
       args:
-        image: 7-nodedev
-    image: aursu/php5build:7-devbase
+        rocky: $RL8
+    image: "ghcr.io/rpmbsys/php56build:${RL8TAG}-${RUNTAG}"
+  rocky8devbase:
+    build:
+      context: .
+      args:
+        image: node22dev
+        rocky: $RL8
+    image: "ghcr.io/rpmbsys/php56build:${RL8TAG}-devbase"

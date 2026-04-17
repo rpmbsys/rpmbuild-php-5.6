@@ -1,21 +1,27 @@
-ARG image=7-web
-FROM aursu/centos:${image}
+ARG rocky=8.10.20240528
+ARG image=web
+FROM ghcr.io/aursu/rockylinux:${rocky}-${image}
 
-COPY system/etc/yum.repos.d/bintray-custom.repo /etc/yum.repos.d/bintray-custom.repo
+LABEL org.opencontainers.image.source=https://github.com/rpmbsys/rpmbuild-php-5.6
 
-RUN yum -y --enablerepo=bintray-custom --enablerepo=bintray-php5custom install \
-        php-bcmath \
-        php-cli \
-        php-fpm \
-        php-mysql \
-        php-opcache \
+COPY system/etc/yum.repos.d/bintray-custom-rocky.repo /etc/yum.repos.d/bintray-custom.repo
+
+RUN microdnf -y  --enablerepo=crb --enablerepo=bintray-custom --enablerepo=bintray-phpcustom install \
+        ImageMagick-libs \
+        php-bcmath-5.6.40 \
+        php-cli-5.6.40 \
+        php-fpm-5.6.40 \
+        php-opcache-5.6.40 \
         php-pecl-apcu \
         php-pecl-geoip \
-        php-pecl-imagick \
         php-pecl-memcached \
-        php-pecl-redis \
-        php-xml \
-    && yum clean all && rm -rf /var/cache/yum /var/lib/rpm/__db*
+        php-pecl-redis6 \
+        php-sodium-5.6.40 \
+        php-xml-5.6.40 \
+        tzdata \
+    && microdnf -y --disablerepo=epel --enablerepo=bintray-phpcustom install \
+        php-pecl-imagick \
+    && microdnf clean all && rm -rf /var/cache/dnf /var/lib/rpm/__db*
 
 # php-fpm configuration
 COPY system/etc/php-fpm.conf /etc/php-fpm.conf
@@ -30,7 +36,8 @@ ENV PHP_FPM_USER=www-data \
     PHP_FPM_PM_START_SERVERS=5 \
     PHP_FPM_PM_MIN_SPARE_SERVERS=5 \
     PHP_FPM_PM_MAX_SPARE_SERVERS=35 \
-    PHP_FPM_PM_MAX_REQUESTS=500
+    PHP_FPM_PM_MAX_REQUESTS=500 \
+    PHP_FPM_PM_STATUS_PATH=""
 
 ENV PHP_INI_SHORT_OPEN_TAG=On \
     PHP_INI_OUTPUT_BUFFERING=Off \
@@ -52,9 +59,12 @@ ENV PHP_INI_SHORT_OPEN_TAG=On \
     PHP_INI_MEMORY_LIMIT=128M \
     PHP_INI_DISPLAY_ERRORS=Off \
     PHP_INI_DISPLAY_STARTUP_ERRORS=Off \
+    PHP_INI_LOG_ERRORS_MAX_LEN=8192 \
     PHP_INI_DATE_TIMEZONE=Europe/Berlin \
     PHP_INI_SESSION_COOKIE_HTTPONLY="" \
-    PHP_INI_SESSION_GC_MAXLIFETIME=1440
+    PHP_INI_SESSION_GC_MAXLIFETIME=1440 \
+    PHP_INI_MAX_EXECUTION_TIME=30
+
 
 WORKDIR /var/www/html
 EXPOSE ${PHP_FPM_LISTEN}
