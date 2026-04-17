@@ -41,5 +41,5 @@ RUN dnf -y install \
 
 RUN dnf -y --enablerepo=bintray-custom install \
         compat-openssl10-devel \
-        mysql-devel \
+        mysql-devel-5.1.60 \
     && dnf clean all && rm -rf /var/cache/dnf /var/lib/rpm/__db*
