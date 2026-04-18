@@ -1,12 +1,5 @@
 services:
-  rocky9php56:
-    volumes:
-      - rpm9rocky:/home/centos/rpmbuild/RPMS
-    build:
-      context: .
-      args:
-        os: $RL9
-  rocky8php56:
+  rocky8build:
     volumes:
       - rpm8rocky:/home/centos/rpmbuild/RPMS
     build:
@@ -15,7 +8,5 @@ services:
         os: $RL8
 
 volumes:
-  rpm9rocky:
-    name: rpm9rocky
   rpm8rocky:
     name: rpm8rocky

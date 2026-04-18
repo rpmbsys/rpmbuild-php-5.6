@@ -12,7 +12,6 @@ RUN dnf -y install \
         gmp-devel \
         libc-client-devel \
         libmcrypt-devel \
-        # bzip2-devel \
         cyrus-sasl-devel \
         freetype-devel \
         gdbm-devel \
@@ -22,20 +21,12 @@ RUN dnf -y install \
         libcurl-devel \
         libedit-devel \
         libdb-devel \
-        # libffi-devel \
-        libicu-devel \
         libjpeg-turbo-devel \
         libpng-devel \
-        # libsodium-devel \
         libtidy-devel \
         libtool-ltdl-devel \
-        # libwebp-devel \
-        # libxcrypt-devel \
         libxml2-devel \
         libxslt-devel \
-        # libzip-devel \
-        # nginx-filesystem \
-        # oniguruma-devel \
         openldap-devel \
         pam-devel \
         pcre-devel \
@@ -49,10 +40,10 @@ RUN dnf -y install \
         systemd-devel \
         systemtap-sdt-devel \
         unixODBC-devel \
-        # zlib-devel \
     && dnf clean all && rm -rf /var/cache/dnf /var/lib/rpm/__db*
 
 RUN dnf -y --enablerepo=bintray-custom install \
         compat-openssl10-devel \
+        libicu-devel \
         mysql-devel-5.1.60 \
     && dnf clean all && rm -rf /var/cache/dnf /var/lib/rpm/__db*

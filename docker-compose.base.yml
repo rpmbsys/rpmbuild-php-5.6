@@ -1,12 +1,5 @@
 services:
-  rocky9php56base:
-    build:
-      context: .
-      dockerfile: Dockerfile.RL9.base
-      args:
-        os: $RL9
-    image: "aursu/php56build:${RL9TAG}-base"
-  rocky8php56base:
+  rocky8base:
     build:
       context: .
       dockerfile: Dockerfile.base

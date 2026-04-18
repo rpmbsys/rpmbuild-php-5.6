@@ -10,8 +10,6 @@ env:
   SPEC_FILE: SPECS/php.spec
   RL8: 8.10.20240528
   RL8TAG: 8.10.20240528
-  RL9: 9.7.20251123
-  RL9TAG: 9.7.20251123
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -19,14 +17,9 @@ jobs:
     strategy:
       matrix:
         include:
-          # - compose-file: docker-compose.yml
-          #   base: rocky9php56base
-          #   build: rocky9php56
-          #   uploader: rocky9bintray
-          #   repo_path: rocky/9
           - compose-file: docker-compose.yml
-            base: rocky8php56base
-            build: rocky8php56
+            base: rocky8base
+            build: rocky8build
             uploader: rocky8bintray
             repo_path: rocky/8
     env:
