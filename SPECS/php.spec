@@ -110,7 +110,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: 5.6.40
-Release: 41%{?dist}
+Release: 43%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -2072,6 +2072,9 @@ EOF
 
 
 %changelog
+* Fri Apr 17 2026 Alexander Ursu <alexander.ursu@gmail.com> - 5.6.40-43
+- added pecl_xmldir macros
+
 * Fri Apr 17 2026 Alexander Ursu <alexander.ursu@gmail.com> - 5.6.40-42
 - no snmp
 
