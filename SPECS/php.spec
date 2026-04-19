@@ -257,7 +257,7 @@ BuildRequires: httpd-filesystem
 # to ensure we are using nginx with filesystem feature (see #1142298)
 BuildRequires: nginx-filesystem
 %endif
-BuildRequires: libstdc++-devel, openssl-devel
+BuildRequires: libstdc++-devel, compat-openssl10-devel
 %if %{with_sqlite3}
 # For Sqlite3 extension
 BuildRequires: sqlite-devel >= 3.6.0
@@ -462,7 +462,7 @@ Requires: php-cli%{?_isa} = %{version}-%{release}, autoconf, automake, make
 Requires: krb5-devel%{?_isa}
 Requires: libedit-devel%{?_isa}
 Requires: libxml2-devel%{?_isa}
-Requires: openssl-devel%{?_isa}
+Requires: compat-openssl10-devel%{?_isa}
 %if %{with_libpcre}
 Requires: pcre-devel%{?_isa}
 %endif
@@ -509,7 +509,7 @@ Group: Development/Languages
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
 Obsoletes: mod_php3-imap, stronghold-php-imap
-BuildRequires: krb5-devel, openssl-devel, libc-client-devel
+BuildRequires: krb5-devel, compat-openssl10-devel, libc-client-devel
 Obsoletes: php53-imap, php53u-imap, php54-imap, php54w-imap, php55u-imap, php55w-imap, php56u-imap, php56w-imap
 
 %description imap
@@ -523,7 +523,7 @@ Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
-BuildRequires: cyrus-sasl-devel, openldap-devel, openssl-devel
+BuildRequires: cyrus-sasl-devel, openldap-devel, compat-openssl10-devel
 Obsoletes: php53-ldap, php53u-ldap, php54-ldap, php54w-ldap, php55u-ldap, php55w-ldap, php56u-ldap, php56w-ldap
 
 %description ldap
@@ -586,7 +586,7 @@ License: PHP
 Requires: php-pdo%{?_isa} = %{version}-%{release}
 Provides: php_database
 Provides: php-pdo_pgsql, php-pdo_pgsql%{?_isa}
-BuildRequires: krb5-devel, openssl-devel, postgresql-devel
+BuildRequires: krb5-devel, compat-openssl10-devel, postgresql-devel
 Obsoletes: php53-pgsql, php53u-pgsql, php54-pgsql, php54w-pgsql, php55u-pgsql, php55w-pgsql, php56u-pgsql, php56w-pgsql
 
 %description pgsql
@@ -1179,11 +1179,13 @@ cat `aclocal --print-ac-dir`/{libtool,ltoptions,ltsugar,ltversion,lt~obsolete}.m
 touch configure.in
 ./buildconf --force
 %if %{with_debug}
-LDFLAGS="-fsanitize=address"
+LDFLAGS="-fsanitize=address -L/usr/local/openssl10/%{_lib} -Wl,-rpath,/usr/local/openssl10/%{_lib}"
 export LDFLAGS
-CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-pointer-sign -fsanitize=address -ggdb"
+CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-pointer-sign -fsanitize=address -ggdb -I/usr/local/openssl10/include"
 %else
-CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-pointer-sign"
+CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-pointer-sign -I/usr/local/openssl10/include"
+LDFLAGS="-L/usr/local/openssl10/%{_lib} -Wl,-rpath,/usr/local/openssl10/%{_lib}"
+export LDFLAGS
 %endif
 export CFLAGS
 
@@ -1231,7 +1233,7 @@ ln -sf ../configure
     --with-t1lib=%{_prefix} \
     --without-gdbm \
     --with-jpeg-dir=%{_prefix} \
-    --with-openssl \
+    --with-openssl=/usr/local/openssl10 \
     --with-system-ciphers \
 %if %{with_libpcre}
     --with-pcre-regex=%{_prefix} \
