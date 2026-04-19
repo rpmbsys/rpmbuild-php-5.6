@@ -1,5 +1,7 @@
+ARG repo=ghcr.io/aursu/rpmbuild
 ARG rocky=8.10.20240528
-FROM aursu/rpmbuild:${rocky}-build
+ARG image=build
+FROM ${repo}:${rocky}-${image}
 
 USER root
 

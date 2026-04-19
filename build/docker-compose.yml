@@ -4,4 +4,4 @@ services:
       context: .
       args:
         rocky: $RL8
-    image: "aursu/php56build:${RL8TAG}-build"
+    image: "ghcr.io/rpmbsys/php56build:${RL8TAG}-build"

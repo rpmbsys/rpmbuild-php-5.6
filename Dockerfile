@@ -1,5 +1,5 @@
-ARG os=8.10.20240528
-FROM aursu/php56build:${os}-base
+ARG rocky=8.10.20240528
+FROM aursu/php56build:${rocky}-base
 
 COPY SOURCES ${BUILD_TOPDIR}/SOURCES
 COPY SPECS ${BUILD_TOPDIR}/SPECS
@@ -7,5 +7,5 @@ COPY SPECS ${BUILD_TOPDIR}/SPECS
 RUN chown -R $BUILD_USER ${BUILD_TOPDIR}/{SOURCES,SPECS}
 
 USER $BUILD_USER
-ENTRYPOINT ["/usr/bin/rpmbuild", "php.spec", "--with", "cgi", "--with", "fpm"]
+ENTRYPOINT ["/usr/bin/rpmbuild", "php.spec"]
 CMD ["-ba"]
