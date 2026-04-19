@@ -920,7 +920,7 @@ License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
 # Upstream requires 4.0, we require 69.1 to ensure use of libicu69
 %if 0%{?rhel}
-BuildRequires: libicu-devel >= 69.1
+BuildRequires: libicu-devel = 69.1
 %else
 BuildRequires: libicu-devel
 %endif
