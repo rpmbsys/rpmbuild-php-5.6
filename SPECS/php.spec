@@ -18,7 +18,7 @@
 %global oci8ver     2.0.12
 
 # Use for first build of PHP (before pecl/zip and pecl/jsonc)
-%global php_bootstrap   0
+%global php_bootstrap   1
 
 # Adds -z now to the linker flags
 %global _hardened_build 1
@@ -104,7 +104,7 @@
 %global with_dtrace  1
 %global with_libgd   0
 %global with_libzip  0
-%global with_zip     0
+%global with_zip     1
 %global db_devel  libdb-devel
 
 Summary: PHP scripting language for creating dynamic web sites
