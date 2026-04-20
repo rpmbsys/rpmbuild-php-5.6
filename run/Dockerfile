@@ -10,10 +10,14 @@ RUN microdnf -y --enablerepo=bintray-custom --enablerepo=bintray-phpcustom insta
         php-bcmath-5.6.40 \
         php-cli-5.6.40 \
         php-fpm-5.6.40 \
+        php-ldap-5.6.40 \
+        php-mcrypt-5.6.40 \
         php-opcache-5.6.40 \
+        php-pdo-5.6.40 \
         php-pecl-apcu-4.0.11 \
+        php-pecl-igbinary-2.0.8 \
         php-pecl-redis4-4.3.0 \
-        php-sodium-5.6.40 \
+        php-soap-5.6.40 \
         php-xml-5.6.40 \
         tzdata \
     && microdnf clean all && rm -rf /var/cache/dnf /var/lib/rpm/__db*
