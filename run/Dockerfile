@@ -10,22 +10,28 @@ RUN microdnf -y --enablerepo=bintray-custom --enablerepo=bintray-phpcustom insta
         php-bcmath-5.6.40 \
         php-cli-5.6.40 \
         php-fpm-5.6.40 \
-        php-ldap-5.6.40 \
-        php-mcrypt-5.6.40 \
+        php-gd-5.6.40 \
+        php-gmp-5.6.40 \
+        php-intl-5.6.40 \
+        php-mbstring-5.6.40 \
+        php-mysqlnd-5.6.40 \
         php-opcache-5.6.40 \
         php-pdo-5.6.40 \
+        php-process-5.6.40 \
+        php-soap-5.6.40 \
+        php-xml-5.6.40 \
         php-pecl-apcu-4.0.11 \
         php-pecl-igbinary-2.0.8 \
         php-pecl-redis4-4.3.0 \
-        php-soap-5.6.40 \
-        php-xml-5.6.40 \
         tzdata \
-    && microdnf clean all && rm -rf /var/cache/dnf /var/lib/rpm/__db*
+    && microdnf clean all && rm -rf /var/cache/dnf /var/lib/rpm/__db* \
+    && rm -f /etc/php.d/*.ini
 
 # php-fpm configuration
 COPY system/etc/php-fpm.conf /etc/php-fpm.conf
 COPY system/etc/php-fpm.d/www.conf /etc/php-fpm.d/www.conf
 COPY system/etc/php.ini /etc/php.ini
+COPY system/etc/php.d/common.ini /etc/php.d/common.ini
 
 ENV PHP_FPM_USER=www-data \
     PHP_FPM_GROUP=www-data \
@@ -44,7 +50,7 @@ ENV PHP_INI_SHORT_OPEN_TAG=On \
     PHP_INI_DISABLE_CLASSES="" \
     PHP_INI_EXPOSE_PHP=Off \
     PHP_INI_MAX_INPUT_TIME=-1 \
-    PHP_INI_LOG_ERRORS=Off \
+    PHP_INI_LOG_ERRORS=On \
     PHP_INI_ERROR_LOG="" \
     PHP_INI_ERROR_REPORTING="E_ALL & ~E_DEPRECATED & ~E_STRICT" \
     PHP_INI_SESSION_USE_COOKIES=1 \
@@ -59,7 +65,7 @@ ENV PHP_INI_SHORT_OPEN_TAG=On \
     PHP_INI_DISPLAY_ERRORS=Off \
     PHP_INI_DISPLAY_STARTUP_ERRORS=Off \
     PHP_INI_LOG_ERRORS_MAX_LEN=8192 \
-    PHP_INI_DATE_TIMEZONE=Europe/Berlin \
+    PHP_INI_DATE_TIMEZONE=UTC \
     PHP_INI_SESSION_COOKIE_HTTPONLY="" \
     PHP_INI_SESSION_GC_MAXLIFETIME=1440 \
     PHP_INI_MAX_EXECUTION_TIME=30
