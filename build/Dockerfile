@@ -13,4 +13,5 @@ RUN dnf -y --enablerepo=bintray-custom --enablerepo=bintray-phpcustom install \
         php-devel-5.6.40 \
         php-process-5.6.40 \
         php-xml-5.6.40 \
+        php-pecl-jsonc-devel-1.3.10 \
     && dnf clean all && rm -rf /var/cache/dnf /var/lib/rpm/__db*
