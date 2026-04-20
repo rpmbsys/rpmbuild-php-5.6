@@ -107,10 +107,12 @@
 %global with_zip     1
 %global db_devel  libdb-devel
 
+%global rpmrel 43
+
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: 5.6.40
-Release: 43%{?dist}
+Release: %{rpmrel}%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD

@@ -5,10 +5,3 @@ services:
       args:
         rocky: $RL8
     image: "ghcr.io/rpmbsys/php56build:${RL8TAG}-${RUNTAG}"
-  rocky8devbase:
-    build:
-      context: .
-      args:
-        image: node22dev
-        rocky: $RL8
-    image: "ghcr.io/rpmbsys/php56build:${RL8TAG}-devbase"

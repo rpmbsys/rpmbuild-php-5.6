@@ -50,29 +50,29 @@ jobs:
       - run: docker compose -f build/docker-compose.yml build --no-cache --pull
       - run: docker login ghcr.io -u $DOCKER_USER -p $DOCKER_PASS
       - run: docker compose -f build/docker-compose.yml push
-  # runtime:
-  #   needs: test
-  #   if: ${{ always() }}
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       compose-file: [run/docker-compose.yml, run/docker-compose.RL9.yml]
-  #   env:
-  #     DOCKER_PASS: ${{ secrets.GITHUB_TOKEN }}
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #       with:
-  #         submodules: true
-  #     - run: docker compose -f ${{ matrix.compose-file }} build --no-cache --pull
-  #     - run: docker login ghcr.io -u $DOCKER_USER -p $DOCKER_PASS
-  #     - run: docker compose -f ${{ matrix.compose-file }} push
-  #     - run: |
-  #         PHP_VERSION=$(awk '/^Version:/ {print $2}' $SPEC_FILE)
-  #         RPM_RELEASE=$(awk '/^%global rpmrel/ {print $3}' $SPEC_FILE)
-  #         PHP_DISTRO="${PHP_VERSION}-${RPM_RELEASE}"
-  #         echo "IMG_RUNTAG=runtime-${PHP_DISTRO}-b${GITHUB_RUN_ID}" >> "$GITHUB_ENV"
-  #     - run: RUNTAG="${IMG_RUNTAG}" docker compose -f ${{ matrix.compose-file }} build
-  #     - run: RUNTAG="${IMG_RUNTAG}" docker compose -f ${{ matrix.compose-file }} push
+  runtime:
+    needs: test
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compose-file: [run/docker-compose.yml]
+    env:
+      DOCKER_PASS: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - run: docker compose -f ${{ matrix.compose-file }} build --no-cache --pull
+      - run: docker login ghcr.io -u $DOCKER_USER -p $DOCKER_PASS
+      - run: docker compose -f ${{ matrix.compose-file }} push
+      - run: |
+          PHP_VERSION=$(awk '/^Version:/ {print $2}' $SPEC_FILE)
+          RPM_RELEASE=$(awk '/^%global rpmrel/ {print $3}' $SPEC_FILE)
+          PHP_DISTRO="${PHP_VERSION}-${RPM_RELEASE}"
+          echo "IMG_RUNTAG=runtime-${PHP_DISTRO}-b${GITHUB_RUN_ID}" >> "$GITHUB_ENV"
+      - run: RUNTAG="${IMG_RUNTAG}" docker compose -f ${{ matrix.compose-file }} build
+      - run: RUNTAG="${IMG_RUNTAG}" docker compose -f ${{ matrix.compose-file }} push
   # dev:
   #   needs: runtime
   #   if: ${{ always() }}

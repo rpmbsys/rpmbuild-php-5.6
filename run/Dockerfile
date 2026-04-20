@@ -7,20 +7,15 @@ LABEL org.opencontainers.image.source=https://github.com/rpmbsys/rpmbuild-php-5.
 COPY system/etc/yum.repos.d/bintray-custom-rocky.repo /etc/yum.repos.d/bintray-custom.repo
 
 RUN microdnf -y  --enablerepo=crb --enablerepo=bintray-custom --enablerepo=bintray-phpcustom install \
-        ImageMagick-libs \
         php-bcmath-5.6.40 \
         php-cli-5.6.40 \
         php-fpm-5.6.40 \
         php-opcache-5.6.40 \
-        php-pecl-apcu \
-        php-pecl-geoip \
-        php-pecl-memcached \
-        php-pecl-redis6 \
+        php-pecl-apcu-4.0.11 \
+        php-pecl-redis4-4.3.0 \
         php-sodium-5.6.40 \
         php-xml-5.6.40 \
         tzdata \
-    && microdnf -y --disablerepo=epel --enablerepo=bintray-phpcustom install \
-        php-pecl-imagick \
     && microdnf clean all && rm -rf /var/cache/dnf /var/lib/rpm/__db*
 
 # php-fpm configuration
