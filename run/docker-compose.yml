@@ -5,3 +5,10 @@ services:
       args:
         rocky: $RL8
     image: "ghcr.io/rpmbsys/php56build:${RL8TAG}-${RUNTAG}"
+  rocky8httpd:
+    build:
+      context: .
+      dockerfile: Dockerfile.httpd
+      args:
+        rocky: $RL8
+    image: "ghcr.io/rpmbsys/php56build:${RL8TAG}-httpd-${RUNTAG}"

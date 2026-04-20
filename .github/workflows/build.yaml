@@ -56,23 +56,28 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        compose-file: [run/docker-compose.yml]
+        include:
+          - compose-file: run/docker-compose.yml
+            build: rocky8run
+          - compose-file: run/docker-compose.yml
+            build: rocky8httpd
     env:
       DOCKER_PASS: ${{ secrets.GITHUB_TOKEN }}
+      BUILD: ${{ matrix.build }}
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
-      - run: docker compose -f ${{ matrix.compose-file }} build --no-cache --pull
+      - run: docker compose -f ${{ matrix.compose-file }} build --no-cache --pull $BUILD
       - run: docker login ghcr.io -u $DOCKER_USER -p $DOCKER_PASS
-      - run: docker compose -f ${{ matrix.compose-file }} push
+      - run: docker compose -f ${{ matrix.compose-file }} push $BUILD
       - run: |
           PHP_VERSION=$(awk '/^Version:/ {print $2}' $SPEC_FILE)
           RPM_RELEASE=$(awk '/^%global rpmrel/ {print $3}' $SPEC_FILE)
           PHP_DISTRO="${PHP_VERSION}-${RPM_RELEASE}"
           echo "IMG_RUNTAG=runtime-${PHP_DISTRO}-b${GITHUB_RUN_ID}" >> "$GITHUB_ENV"
-      - run: RUNTAG="${IMG_RUNTAG}" docker compose -f ${{ matrix.compose-file }} build
-      - run: RUNTAG="${IMG_RUNTAG}" docker compose -f ${{ matrix.compose-file }} push
+      - run: RUNTAG="${IMG_RUNTAG}" docker compose -f ${{ matrix.compose-file }} build $BUILD
+      - run: RUNTAG="${IMG_RUNTAG}" docker compose -f ${{ matrix.compose-file }} push $BUILD
   # dev:
   #   needs: runtime
   #   if: ${{ always() }}
