@@ -6,7 +6,7 @@ LABEL org.opencontainers.image.source=https://github.com/rpmbsys/rpmbuild-php-5.
 
 COPY system/etc/yum.repos.d/bintray-custom-rocky.repo /etc/yum.repos.d/bintray-custom.repo
 
-RUN microdnf -y  --enablerepo=crb --enablerepo=bintray-custom --enablerepo=bintray-phpcustom install \
+RUN microdnf -y --enablerepo=bintray-custom --enablerepo=bintray-phpcustom install \
         php-5.6.40 \
         php-bcmath-5.6.40 \
         php-cli-5.6.40 \
